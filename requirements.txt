@@ -3,3 +3,4 @@ PyMuPDF==1.23.6
 pypdf==3.17.0
 # llmlingua==0.1.2
 nltk==3.8.1
+# sentencepiece==0.1.99
