@@ -3,19 +3,20 @@
 {
 	"name": "ChatPDF Demo v2",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "mcr.microsoft.com/devcontainers/base:bullseye",
+	"image": "mcr.microsoft.com/devcontainers/base:bookworm",
 	"features": {
-		"ghcr.io/devcontainers/features/python:1": {},
-		"ghcr.io/itsmechlark/features/postgresql:1": {},
-		"ghcr.io/robbert229/devcontainer-features/postgresql-client:1": {}
+		"ghcr.io/devcontainers/features/python:1": {
+			"version": "3.10.13"
+			// "version": "3.12.0"
+		}
+		// "ghcr.io/itsmechlark/features/postgresql:1": {},
+		// "ghcr.io/robbert229/devcontainer-features/postgresql-client:1": {}
 	},
-
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
-
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
-
+	// "postCreateCommand": "chmod +x post_create.sh && ./post_create.sh",
 	// Configure tool-specific properties.
 	// "customizations": {},
 	"customizations": {
@@ -24,11 +25,11 @@
 				"ms-toolsai.jupyter",
 				"github.copilot",
 				"github.copilot-chat",
-				"ms-python.autopep8"
+				"ms-python.autopep8",
+				"tomoki1207.pdf"
 			]
 		}
 	}
-
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
 	// "remoteUser": "root"
 }
