@@ -1,7 +1,7 @@
+import os
 import sys
 from pathlib import Path
 
-from requests import get
 
 # Add the top-level folder of the project to sys.path
 top_level_dir = str(Path(__file__).resolve().parent.parent)
@@ -9,12 +9,12 @@ if top_level_dir not in sys.path:
     sys.path.append(top_level_dir)
 
 
-import os
 from modules.extractors.index import extractPDF
 from modules.chunking.index import chunk_text
 from modules.indexing.index import index_chunks
 from modules.context.index import get_context
-from modules.prompt_compression.index import get_longLLMLingua_compressed_prompt
+# from modules.prompt_compression.index import get_longLLMLingua_compressed_prompt
+from modules.openai.index import get_completion
 
 
 def listFiles():
@@ -59,18 +59,23 @@ def main(to_index=False):
     What is the termination policy?
     '''
     print("Querying...")
-    query = "What is the termination policy?"
-    context = get_context(query)
-    print(context)
+    query = "What is their vacation policy?"
+    context = get_context(query, n_results=10)
+    # print(context)
 
     # Get the compressed prompt
-    compressed_prompt = get_longLLMLingua_compressed_prompt(
-        context=context,
-        query=query,
-        instruction="Answer the question based on the context retrieved from the employee handbook."
-    )
-    print(compressed_prompt)
+    # compressed_prompt = get_longLLMLingua_compressed_prompt(
+    #     context=context,
+    #     query=query,
+    #     instruction="Answer the question based on the context retrieved from the employee handbook."
+    # )
+    # print(compressed_prompt)
 
+    # prompt = compressed_prompt
+    prompt = f"Answer the question based on the context retrieved from the employee handbook.\ncontext:{' '.join(context)}\nquestion:{query}\nanswer:"
+    print(prompt)
+    # response = get_completion(prompt)
+    # print(response)
 
 
 if __name__ == '__main__':
