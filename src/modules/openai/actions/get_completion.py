@@ -9,6 +9,7 @@ def get_completion(prompt: str):
             }
         ],
         model="gpt-3.5-turbo",
+        temperature=0.1,
     )
     '''
     Sample:
