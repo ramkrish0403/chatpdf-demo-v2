@@ -1,11 +1,16 @@
 import json
+from math import hypot
 from src.clients.chromadb.index import chroma_collection
 from .normalize_chromadb_query_output import normalize_chromadb_query_output
 from .augment_retrieved_docs import augment_retrieved_docs
+from .get_hypothetical_response import get_hypothetical_response
 
 
 def get_context(query: str, n_results: int = 4, length: int = 500):
-    queries = [query]
+    # Generate hypothetical response
+    hypothetical_response = get_hypothetical_response(query)
+    # queries = [query]
+    queries = [query, hypothetical_response]
     results = chroma_collection.query(
         query_texts=queries,
         n_results=n_results

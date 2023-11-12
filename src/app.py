@@ -62,6 +62,9 @@ def main(to_index=False):
     query = "What is their vacation policy?"
     context = get_context(query, n_results=10)
     # print(context)
+    # context_joined = ' '.join(context)
+    context_joined = '\n'.join(context)
+    # print('context_joined)
 
     # Get the compressed prompt
     # compressed_prompt = get_longLLMLingua_compressed_prompt(
@@ -72,10 +75,12 @@ def main(to_index=False):
     # print(compressed_prompt)
 
     # prompt = compressed_prompt
-    prompt = f"Answer the question based on the context retrieved from the employee handbook.\ncontext:{' '.join(context)}\nquestion:{query}\nanswer:"
+    instruction = "Answer the question based on the context retrieved from the employee handbook. Please be comprehensive."
+    prompt = f"{instruction}\ncontext:{context_joined}\nquestion:{query}\nanswer:"
     print(prompt)
-    # response = get_completion(prompt)
-    # print(response)
+
+    response = get_completion(prompt)
+    print(response)
 
 
 if __name__ == '__main__':
