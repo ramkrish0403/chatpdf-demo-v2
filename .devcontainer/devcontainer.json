@@ -16,7 +16,7 @@
 	// "features": {},
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
-	// "postCreateCommand": "chmod +x post_create.sh && ./post_create.sh",
+	"postCreateCommand": "chmod +x post_create.sh && ./post_create.sh",
 	// Configure tool-specific properties.
 	// "customizations": {},
 	"customizations": {
