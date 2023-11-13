@@ -1,6 +1,6 @@
 from .get_client import client
 
-def get_completion(prompt: str):
+def get_completion(prompt: str, temperature: float = 0.5, max_tokens: int | None= None):
     chat_completion = client.chat.completions.create(
         messages=[
             {
@@ -9,7 +9,8 @@ def get_completion(prompt: str):
             }
         ],
         model="gpt-3.5-turbo",
-        temperature=0.1,
+        temperature=temperature,
+        max_tokens=max_tokens,
     )
     '''
     Sample:

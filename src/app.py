@@ -59,7 +59,7 @@ def main(to_index=False):
     What is the termination policy?
     '''
     print("Querying...")
-    query = "What is the termination policy?"
+    query = "What is their vacation policy?"
     context = get_context(query, n_results=10)
     # print(context)
     # context_joined = ' '.join(context)
@@ -75,11 +75,11 @@ def main(to_index=False):
     # print(compressed_prompt)
 
     # prompt = compressed_prompt
-    instruction = "Answer the question based on the context retrieved from the employee handbook. Please be comprehensive and format for readability."
-    prompt = f"{instruction}\ncontext:{context_joined}\nquestion:{query}\nanswer:"
+    instruction = "Answer the question based on the context retrieved from the employee handbook.Please be comprehensive, and format for human readability by using smaller paragraphs."
+    prompt = f"{instruction}\n\ncontext:\n{context_joined}\n\nquestion:\n{query}\n\nanswer:\n"
     print(prompt)
 
-    response = get_completion(prompt)
+    response = get_completion(prompt, temperature=0.0, max_tokens=None)
     print(response)
 
 

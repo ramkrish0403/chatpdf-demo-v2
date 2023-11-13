@@ -5,6 +5,6 @@ def get_hypothetical_response(query: str):
     prompt = f"{instruction}\nuser question:{query}\nhypothetical answer:"
     # print(prompt)
 
-    response = get_completion(prompt)
+    response = get_completion(prompt, temperature=1.0, max_tokens=200)
     print("hypothetical response: ", response)
     return response
