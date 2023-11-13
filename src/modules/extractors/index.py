@@ -1,3 +1,1 @@
-from .pdf.pypdfExtractor import extract
-
-extractPDF = extract
+from .pdf.pypdfExtractor import extract as extractPDF
