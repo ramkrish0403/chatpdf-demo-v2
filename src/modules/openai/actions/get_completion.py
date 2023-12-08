@@ -1,14 +1,17 @@
-from .get_client import client
+# from .get_client import client
+from .get_client import openai as client
 
 def get_completion(prompt: str, temperature: float = 0.5, max_tokens: int | None= None):
-    chat_completion = client.chat.completions.create(
+    # chat_completion = client.chat.completions.create(
+    chat_completion = client.ChatCompletion.create(
         messages=[
             {
                 "role": "user",
                 "content": prompt,
             }
         ],
-        model="gpt-3.5-turbo",
+        # model="gpt-3.5-turbo",
+        model="gpt-3.5-turbo-16k",
         temperature=temperature,
         max_tokens=max_tokens,
     )

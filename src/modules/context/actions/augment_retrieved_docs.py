@@ -4,7 +4,7 @@ def update_score(docs, ids, score):
         docs[id1] = docs.get(id1, 0) + score
     return docs
 
-def augment_retrieved_docs(docs, neighbor_score_factor=0.5, neighborhood_range=5, min_score=0.7):
+def augment_retrieved_docs(docs, neighbor_score_factor=0.5, neighborhood_range=7, min_score=0.1):
     augmented_docs = dict()
     for doc in docs:
         ids = doc['ids']
@@ -25,6 +25,7 @@ def augment_retrieved_docs(docs, neighbor_score_factor=0.5, neighborhood_range=5
             augmented_docs = update_score(augmented_docs, neighbors, neighbor_score)
 
     # Filter out docs with score less than min_score
+    # print("Augmented doc ids: ", augmented_docs)
     augmented_docs = {k: v for k, v in augmented_docs.items() if v >= min_score}
     return augmented_docs
 

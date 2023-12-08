@@ -1,7 +1,9 @@
 import os
 import sys
 from pathlib import Path
+from dotenv import load_dotenv
 
+load_dotenv()
 
 # Add the top-level folder of the project to sys.path
 top_level_dir = str(Path(__file__).resolve().parent.parent)
@@ -35,15 +37,18 @@ def main(to_index=False):
             return
 
         # Extract text
-        file = files[0]
+        # file = files[0]
+        file = [x for x in files if "Twilio" in x][0]
         text = extractPDF(file)
         print(len(text))
+        # print(text)
+        # return
 
         # Sanitize text
         text = text.replace("\n", " ")
 
         # Chunk text
-        chunks = chunk_text(text)
+        chunks = chunk_text(text, max_steps=5)
         print(len(chunks))
         # print(chunks[-1])
 
@@ -52,19 +57,18 @@ def main(to_index=False):
         index_chunks(chunks)
 
     # query the chunks
-    '''
-    What is the name of the company?
-    Who is the CEO of the company?
-    What is their vacation policy?
-    What is the termination policy?
-    '''
     print("Querying...")
-    query = "What is their vacation policy?"
-    context = get_context(query, n_results=10)
+    query = "What are the security policies and procedures implemented"
+    context = get_context(query, n_results=20)
     # print(context)
     # context_joined = ' '.join(context)
-    context_joined = '\n'.join(context)
+    context_joined = '\n\n'.join(context)
     # print('context_joined)
+    allowed_context_tokens = 10000
+    allowed_context_length = 4 * allowed_context_tokens
+    truncated_context = context_joined[:allowed_context_length]
+    print("Context length: ", len(context_joined), len(truncated_context))
+    print("Approx. Token length: ", len(truncated_context) / 4)
 
     # Get the compressed prompt
     # compressed_prompt = get_longLLMLingua_compressed_prompt(
@@ -75,8 +79,8 @@ def main(to_index=False):
     # print(compressed_prompt)
 
     # prompt = compressed_prompt
-    instruction = "Answer the question based on the context retrieved from the employee handbook.Please be comprehensive, and format for human readability by using smaller paragraphs."
-    prompt = f"{instruction}\n\ncontext:\n{context_joined}\n\nquestion:\n{query}\n\nanswer:\n"
+    instruction = "Answer the question based on the context retrieved from the Soc2 report.Please be comprehensive, and format for human readability by using smaller paragraphs. Please provide justification for your answer."
+    prompt = f"{instruction}\n\ncontext:\n{truncated_context}\n\nquestion:\n{query}\n\nanswer:\n"
     print(prompt)
 
     response = get_completion(prompt, temperature=0.0, max_tokens=None)
@@ -85,3 +89,4 @@ def main(to_index=False):
 
 if __name__ == '__main__':
     main(to_index=False)
+    # main(to_index=True)

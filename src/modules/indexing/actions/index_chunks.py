@@ -3,11 +3,21 @@ from src.util.string_util import random_string
 import json
 
 
-def index_chunks(chunks):
-    chroma_collection.add(
-        documents=[chunk["text"] for chunk in chunks],
-        metadatas=[{"ids": json.dumps(chunk["ids"])} for chunk in chunks],
-        # ids=[random_string() for _ in range(len(chunks))]
-        ids=[json.dumps(chunk["ids"]) for chunk in chunks]
-    )
+def index_chunks(chunks, batch_size=100):
+    # chroma_collection.add(
+    #     documents=[chunk["text"] for chunk in chunks],
+    #     metadatas=[{"ids": json.dumps(chunk["ids"])} for chunk in chunks],
+    #     # ids=[random_string() for _ in range(len(chunks))]
+    #     ids=[json.dumps(chunk["ids"]) for chunk in chunks]
+    # )
+
+    # Index in batches
+    for i in range(0, len(chunks), batch_size):
+        batch = chunks[i:i+batch_size]
+        chroma_collection.add(
+            documents=[chunk["text"] for chunk in batch],
+            metadatas=[{"ids": json.dumps(chunk["ids"])} for chunk in batch],
+            # ids=[random_string() for _ in range(len(chunks))]
+            ids=[json.dumps(chunk["ids"]) for chunk in batch]
+        )
     return
