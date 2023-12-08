@@ -163,4 +163,5 @@ cython_debug/
 # Project rules
 *.pdf
 src/clients/chromadb/data/*
+src/clients/chromadb/data*
 tmp.txt
